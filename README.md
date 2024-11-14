@@ -50,7 +50,6 @@ Configuração de Modelos:
 Este projeto foi desenvolvido como parte das atividades da disciplina de IOT pelos seguintes alunos:
 
 * **Marcos Edson Anerio Dos Santos** - *Desenvolvedor* - [Marcos Edson](https://github.com/MarcosEdsonAnerio)
-* **Wester Jesuino Morandi de Oliveira** - *Desenvolvedor* - [Wester Jesuino](https://github.com/MarcosEdsonAnerio)
 
 Professor responsável:
 
