@@ -1,0 +1,7 @@
+<!-- views/clientes/index.hbs -->
+<h1>Lista de Clientes</h1>
+<ul>
+  {{#each clientes}}
+    <li>{{this.nome}} - {{this.password}}</li>
+  {{/each}}
+</ul>
