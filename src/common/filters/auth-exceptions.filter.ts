@@ -24,10 +24,7 @@ export class AuthExceptionFilter implements ExceptionFilter {
       exception instanceof UnauthorizedException ||
       exception instanceof ForbiddenException
     ) {
-      request.flash(
-        'loginError',
-        'Usuário e/ou senha incorretos! Tente novamente.',
-      );
+      request.flash('loginError', 'Usuário e/ou senha incorretos! Tente novamente.');
       response.redirect('/');
     } else {
       response.redirect('/error');

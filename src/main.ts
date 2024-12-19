@@ -1,29 +1,36 @@
+// main.ts
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import * as session from 'express-session';
-import * as hbs from 'hbs';
-import * as hbsUtils from 'hbs-utils';
-import * as passport from 'passport';
 import { join } from 'path';
 import { AppModule } from './app.module';
-import { NotFoundExceptionFilter } from './common/filters/not-found-exception.filter';
-import { flashErrors } from './common/helpers/flash-errors';
-import { hbsRegisterHelpers } from './common/helpers/hbs-functions';
+
+import * as exphbs from 'express-handlebars';
+import * as session from 'express-session';
+import * as passport from 'passport';
 import flash = require('connect-flash');
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  hbsRegisterHelpers(hbs);
-  hbsUtils(hbs).registerWatchedPartials(join(__dirname, '/views/layouts'));
-  app.useStaticAssets(join(__dirname, '..', 'public'));
-  app.setBaseViewsDir(join(__dirname, '/views'));
-  hbs.registerPartials(join(__dirname, '/views/layouts/partials'));
-  app.setViewEngine('hbs');
+  const helpers = {
+    dateFormat: (date: string) => {
+      const locale = new Date(date);
+      return locale.toLocaleString('pt-BR');
+    },
+    inc: (value: string) => parseInt(value) + 1,
+  };
+
+  const viewsPath = join(__dirname, '../public/views');
+  app.engine(
+    '.hbs',
+    exphbs({ extname: '.hbs', defaultLayout: 'main', helpers }),
+  );
+  app.set('views', viewsPath);
+  app.set('view engine', '.hbs');
 
   app.use(
     session({
-      secret: 'homehelper cats',
+      secret: 'nest cats',
       resave: false,
       saveUninitialized: false,
     }),
@@ -33,9 +40,6 @@ async function bootstrap() {
   app.use(passport.session());
   app.use(flash());
 
-  app.use(flashErrors);
-  app.useGlobalFilters(new NotFoundExceptionFilter());
-
-  await app.listen(3000);
+  await app.listen(4000);
 }
 bootstrap();
