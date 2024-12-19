@@ -1,0 +1,39 @@
+-- Criação do banco de dados
+CREATE DATABASE homehelper_db;
+USE homehelper_db;
+
+-- Tabela cliente
+CREATE TABLE cliente (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    telefone VARCHAR(15),
+    email VARCHAR(100) UNIQUE NOT NULL
+);
+
+-- Tabela profissional
+CREATE TABLE profissional (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    servico VARCHAR(50) NOT NULL,
+    telefone VARCHAR(15)
+);
+
+-- Tabela agendamento
+CREATE TABLE agendamento (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    data DATE NOT NULL,
+    horario TIME NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    clienteId INT,
+    profissionalId INT,
+    FOREIGN KEY (clienteId) REFERENCES cliente(id),
+    FOREIGN KEY (profissionalId) REFERENCES profissional(id)
+);
+
+-- Tabela para relação muitos-para-muitos (N:N)
+CREATE TABLE servico_profissional (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    servicoId INT,
+    profissionalId INT,
+    FOREIGN KEY (profissionalId) REFERENCES profissional(id)
+);
